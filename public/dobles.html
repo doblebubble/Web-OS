@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<title>Dobles Secret Inputs</title>
+
+<style>
+body, textarea, select, button {
+  font-family: Verdana;
+}
+</style>
+<style>
+body {
+  font-family: Verdana;
+}
+
+.arabicFont {
+  font-family: "Tahoma", "Arial";
+  direction: rtl;
+}
+
+.koreanFont {
+  font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+}
+
+.greekFont {
+  font-family: "Times New Roman", serif;
+}
+
+.cyrillicFont {
+  font-family: "Georgia", serif;
+}
+
+.defaultFont {
+  font-family: Verdana;
+}
+</style>
+</head>
+<body>
+
+<div id="tilt">
+<style>
+#tilt {
+  transform-style: preserve-3d;
+  transition: transform 0.1s linear;
+}
+</style>
+
+<h1>Dobles Secret Inputs (MultiWorluale)</h1>
+<p>ㅇㅐㅠㅣㄷㄴ ㄴㄷㅊㄱㄷㅅ ㅑㅜㅔㅕㅅㄴ (ㅡㅕㅣㅅㅑㅈㅐㄱㅣㅕㅁㅣㄷ)</p>
+<p>دوبلهس سهترهط ينپعطس (معلطيوورلعاله) <br><br> δοβλεσ σεψρετ ινπυτσ (μυλτιωορλυαλε)  доблес сецрет инпутс (мултиворлуале) <br><br>доблес сецрет инпутс (мултиворлуале)</p>
+<textarea id="input" rows="6" cols="60"></textarea>
+<br>
+
+<select id="mode" onchange="updateFont()">
+
+  <option value="b64e">Base64 Encode</option>
+  <option value="b64d">Base64 Decode</option>
+  <option value="morsee">Morse Encode</option>
+  <option value="morsed">Morse Decode</option>
+  <option value="koe">Korean Encode</option>
+  <option value="kod">Korean Decode</option>
+  <option value="are">Arabic Encode</option>
+  <option value="ard">Arabic Decode</option>
+  <option value="greeke">Greek Encode</option>
+  <option value="greekd">Greek Decode</option>
+  <option value="cyre">Cyrillic Encode</option>
+  <option value="cyrd">Cyrillic Decode</option>
+</select>
+
+
+<button onclick="run()">Run</button>
+
+<h3>Output</h3>
+<textarea id="output" rows="6" cols="60"></textarea>
+
+<br>
+<button onclick="copyText()">Copy</button>
+
+<script>
+let clickCount = 0;
+
+// secret click egg
+document.addEventListener("click", function () {
+  clickCount++;
+
+  if (clickCount === 30) {
+    document.getElementById("output").value =
+      "Great job! Youre now a clicker";
+
+    document.body.style.background = "green";
+    document.body.style.color = "lime";
+  }
+
+});
+// ---------------- BASE64 ----------------
+function b64e(s){ return btoa(unescape(encodeURIComponent(s))); }
+function b64d(s){ return decodeURIComponent(escape(atob(s))); }
+
+// ---------------- MORSE ----------------
+const morse = {
+a:".-",b:"-...",c:"-.-.",d:"-..",e:".",
+f:"..-.",g:"--.",h:"....",i:"..",j:".---",
+k:"-.-",l:".-..",m:"--",n:"-.",o:"---",
+p:".--.",q:"--.-",r:".-.",s:"...",t:"-",
+u:"..-",v:"...-",w:".--",x:"-..-",y:"-.--",z:"--..",
+" ":"/"
+};
+
+function morsee(s){
+  return s.toLowerCase().split("").map(c=>morse[c]||"").join(" ");
+}
+
+function morsed(s){
+  let r={};
+  for(let k in morse) r[morse[k]]=k;
+  return s.split(" ").map(c=>r[c]||"").join("");
+}
+
+// ---------------- KOREAN ----------------
+const ko = {a:"ㅁ",b:"ㅠ",c:"ㅊ",d:"ㅇ",e:"ㄷ",f:"ㄹ",g:"ㅎ",h:"ㅗ",i:"ㅑ",j:"ㅓ",k:"ㅏ",l:"ㅣ",m:"ㅡ",n:"ㅜ",o:"ㅐ",p:"ㅔ",q:"ㅂ",r:"ㄱ",s:"ㄴ",t:"ㅅ",u:"ㅕ",v:"ㅍ",w:"ㅈ",x:"ㅌ",y:"ㅛ",z:"ㅋ"," ":" "};
+function koe(s){ return s.toLowerCase().split("").map(c=>ko[c]||c).join(""); }
+function kod(s){
+  let r={}; for(let k in ko) r[ko[k]]=k;
+  return s.split("").map(c=>r[c]||c).join("");
+}
+
+// ---------------- ARABIC ----------------
+const ar = {a:"ا",b:"ب",c:"ت",d:"د",e:"ه",f:"ف",g:"ج",h:"ح",i:"ي",j:"ج",k:"ك",l:"ل",m:"م",n:"ن",o:"و",p:"پ",q:"ق",r:"ر",s:"س",t:"ط",u:"ع",v:"ڤ",w:"و",x:"خ",y:"ي",z:"ز"," ":" "};
+function are(s){ return s.toLowerCase().split("").map(c=>ar[c]||c).join(""); }
+function ard(s){
+  let r={}; for(let k in ar) r[ar[k]]=k;
+  return s.split("").map(c=>r[c]||c).join("");
+}
+
+// ---------------- GREEK ----------------
+const gr = {a:"α",b:"β",c:"ψ",d:"δ",e:"ε",f:"φ",g:"γ",h:"η",i:"ι",j:"ξ",k:"κ",l:"λ",m:"μ",n:"ν",o:"ο",p:"π",q:"θ",r:"ρ",s:"σ",t:"τ",u:"υ",v:"ω",w:"ω",x:"χ",y:"ψ",z:"ζ"," ":" "};
+function greeke(s){ return s.toLowerCase().split("").map(c=>gr[c]||c).join(""); }
+function greekd(s){
+  let r={}; for(let k in gr) r[gr[k]]=k;
+  return s.split("").map(c=>r[c]||c).join("");
+}
+
+// ---------------- CYRILLIC ----------------
+const cy = {a:"а",b:"б",c:"ц",d:"д",e:"е",f:"ф",g:"г",h:"х",i:"и",j:"ј",k:"к",l:"л",m:"м",n:"н",o:"о",p:"п",q:"к",r:"р",s:"с",t:"т",u:"у",v:"в",w:"в",x:"х",y:"ы",z:"з"," ":" "};
+function cyre(s){ return s.toLowerCase().split("").map(c=>cy[c]||c).join(""); }
+function cyrd(s){
+  let r={}; for(let k in cy) r[cy[k]]=k;
+  return s.split("").map(c=>r[c]||c).join("");
+}
+
+// ---------------- RUN ----------------
+function run(){
+  let i=document.getElementById("input").value;
+  let m=document.getElementById("mode").value;
+  let o="";
+
+  if(m=="b64e") o=b64e(i);
+  if(m=="b64d") o=b64d(i);
+  if(m=="morsee") o=morsee(i);
+  if(m=="morsed") o=morsed(i);
+  if(m=="koe") o=koe(i);
+  if(m=="kod") o=kod(i);
+  if(m=="are") o=are(i);
+  if(m=="ard") o=ard(i);
+  if(m=="greeke") o=greeke(i);
+  if(m=="greekd") o=greekd(i);
+  if(m=="cyre") o=cyre(i);
+  if(m=="cyrd") o=cyrd(i);
+
+  document.getElementById("output").value=o;
+}
+
+function copyText(){
+  let o=document.getElementById("output");
+  o.select();
+  document.execCommand("copy");
+}
+let tilt = document.getElementById("tilt");
+
+document.addEventListener("mousemove", function(e){
+  let x = (e.clientX / window.innerWidth) - 0.5;
+  let y = (e.clientY / window.innerHeight) - 0.5;
+
+  let rotateY = x * 20;
+  let rotateX = -y * 20;
+
+  tilt.style.transform = "rotateX(" + rotateX + "deg) rotateY(" + rotateY + "deg)";
+});
+
+function updateFont() {
+  let mode = document.getElementById("mode").value;
+
+  document.body.classList.remove(
+    "arabicFont",
+    "koreanFont",
+    "greekFont",
+    "cyrillicFont",
+    "defaultFont"
+  );
+
+  if (mode.startsWith("ar")) {
+    document.body.classList.add("arabicFont");
+  } 
+  else if (mode.startsWith("ko")) {
+    document.body.classList.add("koreanFont");
+  }
+  else if (mode.startsWith("greek")) {
+    document.body.classList.add("greekFont");
+  }
+  else if (mode.startsWith("cyr")) {
+    document.body.classList.add("cyrillicFont");
+  }
+  else {
+    document.body.classList.add("defaultFont");
+  }
+}
+updateFont();
+</script>
+</div>
+</body>
+</html>

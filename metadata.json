@@ -1,0 +1,5 @@
+{
+  "name": "Web AICESOS",
+  "description": "An Awesome Incredible Cool Epic Super Operating System simulation.",
+  "requestFramePermissions": ["camera"]
+}
